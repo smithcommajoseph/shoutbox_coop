@@ -1,0 +1,8 @@
+core = "6.x"
+dependencies[] = "atrium"
+dependencies[] = "atrium_shoutbox"
+dependencies[] = "common_js_tools"
+description = "Makes Shoutboxes pages act ajaxy similar to CO-OP app"
+name = "Shoutbox Co-op"
+package = "Atrium"
+version = "6.x-1.0-beta2"
