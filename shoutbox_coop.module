@@ -1,0 +1,48 @@
+<?php
+
+module_load_include('inc', 'common_js', 'includes/common_js_tools.lib');
+
+drupal_add_js(drupal_get_path('module', 'shoutbox_coop') .'/shoutbox_coop.js');
+
+/**
+ * Implements hook_menu_alter()
+ */
+function shoutbox_coop_menu_alter(&$items) {
+    //Forcing the Shoutbox Feature link to act like a normal link and not launch the Shoutbox in the Palette block
+    unset($items['shoutbox']);
+    $items['shoutbox'] = array(
+        'title' => 'Shoutbox',
+        'title callback' => 'atrium_shoutbox_title',
+        'page callback' => 'atrium_shoutbox_page',
+        'access callback' => module_exists('spaces') ? 'spaces_access_feature' : 'user_access',
+        'access arguments' => module_exists('spaces') ? array('view', 'atrium_shoutbox') : array('access comments'),
+        'type' => MENU_NORMAL_ITEM,
+        'menu_name' => 'features'
+    );
+
+    return $items;
+}
+
+/*
+ * Implements hook_menu()
+ */
+function shoutbox_coop_menu() {
+    $items = array();
+    //this gets called periodically to refresh the unseen shouts
+    $items['shoutbox/reload'] = array(
+        'description' => 'Shoutbox reload script',
+        'page callback'=> 'shoutbox_coop_get_shoutbox',
+        'access arguments' => array('post comments'),
+        'type' => MENU_CALLBACK,
+    );
+    
+    return $items;
+}
+
+/*
+ * our page callback for shoutbox/reload
+ */
+function shoutbox_coop_get_shoutbox() {
+    $output = views_embed_view('shoutbox_shouts', 'page_1');
+    print _common_js_tools_json(array('status' => TRUE, 'data' => $output));
+}
