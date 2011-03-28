@@ -1,12 +1,12 @@
 Drupal.behaviors.shoutbox_coop = function(context) {
     
     //Not the prettiest way to reload all the shouts, but it does the trick.
-    var shoutboxReload = function(forceReload){
-        var forceReload = forceReload || false,
-        uri = location.href.split('/'),
+    var shoutboxReload = function(forceReload){        
+        var  uri = location.href.split('/'),
         group = uri[3],
         firstPager = $('.pager ul.links.pager li')[0];
-        // var uri = $('.pager ul.links.pager li.active a').attr('href');
+        
+        forceReload = forceReload || false;
         
         if($(firstPager).hasClass('pager-current') || forceReload === true){
             $.getJSON('/'+group+'/shoutbox/reload', function(data){
