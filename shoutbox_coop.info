@@ -1,3 +1,4 @@
+; $Id atrium_shoutbox.info $
 core = "6.x"
 dependencies[] = "atrium"
 dependencies[] = "atrium_shoutbox"

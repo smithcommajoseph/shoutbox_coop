@@ -1,4 +1,5 @@
 <?php
+// $Id: shoutbox_coop.module $
 
 module_load_include('inc', 'common_js', 'includes/common_js_tools.lib');
 
